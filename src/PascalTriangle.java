@@ -43,10 +43,5 @@ public class PascalTriangle {
         return (a<b)? a: b; 
     }
  
-    /* Driver program to test above function*/
-    public static void main(String args[]) {
-    int n = 5, k = 2;
-    System.out.println("Value of C("+n+","+k+") is "+binomialCoeff(n, k));
-    }
 }
 

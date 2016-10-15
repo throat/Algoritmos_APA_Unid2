@@ -2,23 +2,31 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Robertson
+ * Esta classe é responsável por calcular a altura maxima que um conjunto de caixas
+ * podem ser empilhadas, de modo que a caixa mais em baixo tenha largura e comprimento
+ * maiores do que a caixa de cima.
+ * Uma caixa pode ser rotacionada para ser colocada em cima de outra, ou seja, 
+ * consideramos a caixa C1(altura, comprimento, largura) como 
+ * c2(comprimento, altura, largura)
+ * O algoritmo consiste em dado um array com as rotações das caixas, para uma posicao
+ * i, calculamos a altura maxima dado que a caixa i está no topo.
+ * 
+ * Dado que o vetor de rotações é ordenado por área da base, podemos verificar 
+ * um a um se a caixa[i+1] pode ser colocada sobre [i] e adicionamos o valor de sua altura
+ * a altura maxima.
+ * no fim, retornamos o resultado com a maior altura.
  */
 public class BoxStacking {
 
-    //estrutura de dados caixa contendo 3 valoes inteiros
+    //menor de dois inteiros
     public static int min(int x, int y) {
         return (x < y) ? x : y;
     }
 
-// A utility function to get maximum of two intgers
+// maior de dois inteiros
     public static int max(int x, int y) {
         return (x > y) ? x : y;
     }
@@ -34,30 +42,26 @@ public class BoxStacking {
         Caixa rot[] = new Caixa[3 * n];
         int index = 0;
         for (int i = 0; i < n; i++) {
-            // Copy the original box
+            // Caixa original
             rot[index] = arr[i];
             index++;
 
-            // First rotation of box
+            // Primeira rotação
             rot[index] = new Caixa(arr[i].largura, max(arr[i].altura, arr[i].comprimento), min(arr[i].altura, arr[i].comprimento));
-            //rot[index].altura = arr[i].largura;
-            //rot[index].comprimento = max(arr[i].altura, arr[i].comprimento);
-            // rot[index].largura = min(arr[i].altura, arr[i].comprimento);
+           
             index++;
 
-            // Second rotation of box
+            // Segunda rotação
             rot[index] = new Caixa(arr[i].comprimento, max(arr[i].altura, arr[i].largura), min(arr[i].altura, arr[i].largura));
-            //  rot[index].altura = arr[i].comprimento;
-            // rot[index].comprimento = max(arr[i].altura, arr[i].largura);
-            // rot[index].largura = min(arr[i].altura, arr[i].largura);
+           
             index++;
         }
 
-        // Now the number of boxes is 3n
+        
         n = 3 * n;
 
-        /* Sort the array ‘rot[]’ in decreasing order, using library
-      function for quick sort */
+        /* Ordena vetor ‘rot[]’ em ordem decrescente usando a área da base como critério
+        base = comprimento* largura */
         Arrays.sort(rot, new Comparator<Caixa>() {
             @Override
             public int compare(Caixa o1, Caixa o2) {
@@ -65,28 +69,28 @@ public class BoxStacking {
             }
         });
 
-        // Uncomment following two lines to print all rotations
-        for (int i = 0; i < n; i++ )
+        // descomente para imprimir as rotacoes
+       /* for (int i = 0; i < n; i++ )
             System.out.println( rot[i].altura+" "+ rot[i].largura+" "+ rot[i].comprimento);
-        /* Initialize msh values for all indexes 
-      msh[i] –> Maximum possible Stack Height with box i on top */
+        
+      msh[i] –> altura maxima com caixa[i] no topo */
         int msh[] = new int[n];
         for (int i = 0; i < n; i++) {
             msh[i] = rot[i].altura;
         }
 
-        /* Compute optimized msh values in bottom up manner */
-        for (int i = 1; i < n; i++) {
+        /*calcula altura máxima obtida de baixo pra cima */
+        for (int i = 1; i < n; i++) { 
             for (int j = 0; j < i; j++) {
-                if (rot[i].largura < rot[j].largura
+                if (rot[i].largura < rot[j].largura //verifica se dimensoes sao aceitas
                         && rot[i].comprimento < rot[j].comprimento
-                        && msh[i] < msh[j] + rot[i].altura) {
+                        && msh[i] < msh[j] + rot[i].altura) { //verifica se altura aumenta
                     msh[i] = msh[j] + rot[i].altura;
                 }
             }
         }
 
-        /* Pick maximum of all msh values */
+        /* pega o valor da altura maxima */
         int max = -1;
         for (int i = 0; i < n; i++) {
             if (max < msh[i]) {

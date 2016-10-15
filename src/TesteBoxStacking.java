@@ -61,7 +61,7 @@ public class TesteBoxStacking {
         System.out.println("Solução utiliza 2 caixas c1 e 2 caixas c2 com altura maxima 85");
         teste2();  
          System.out.println("Teste válido: 1 caixas com dimensão c1(40,30,20)");
-        System.out.println("Solução utiliza 1 caixas c1 de altura 40, sendo impossivel com as dimensoes 30x20 empilhar outra");
+        System.out.println("Solução utiliza 1 caixa c1 de altura 40, sendo impossivel com as dimensoes 30x20 empilhar outra");
         teste3();  
         
     }

@@ -54,7 +54,7 @@ public class TestePrimMST {
     }
     
      public static void teste3() {
-        System.out.println("Teste válido: Exemplo nos comentarios");
+        System.out.println("Teste válido: Exemplo dos comentarios");
         int graph[][] = new int[][]{{0, 5, 0, 7},
         {5, 0, 4, 0},
         {0, 4, 0, 1},

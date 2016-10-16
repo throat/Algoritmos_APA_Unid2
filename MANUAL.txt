@@ -1,0 +1,157 @@
+*** DINAMICA
+
+-------> Triangulo de Pascal
+A classe PascalTriangle implementa um algoritmo capaz de calcular o resultado
+de um coeficiente binomial. Um coeficiente binomial éa  relação entre dois números 
+naturais n e p, com n>=p, cujo resultado é n!/(p! (n-p)!).
+
+O triangulo de pascal consiste em armazenar resultados de coeficientes
+binomiais em uma matriz, de modo que coeficientes com mesmo numerador (n)
+sejam armazenados na mesma linha, e denominador (p) na mesma coluna.
+
+Observamos que o coeficiente binomial onde n e p são iguais é dado por
+n!/p!0!, cujo resultado é sempre 1. (n! e p! se cancelam, e 0! é 1).
+Finalmente, o coeficiente binomial de n e p, com n e p distintos é 
+dado pelo valor do resultado do coeficiente binomial de n-1 e p-1 somados ao
+coeficiente de n-1 e p. 
+
+Metodos:
+* int binomialCoeff(int n, k) 
+- Parâmetros: n e k, inteiros referentes ao n e p do coeficiente binomial.
+- Retorno: valor inteiro resultado do coeficiente binomial.
+
+-------> Troco em Moedas
+O objetivo desta classe é calcular de quantas formas distintas pode-se
+dar um troco N dado que dispoe-se de um número infinito de moedas em um 
+conjunto S = {moeda1, moeda2, ... , moedaM}.
+
+Exemplo de funcionamento: dado que queremos dar o troco de 5 centavos e
+dispomos de moedas de 1, 2 e 3, o algoritmo partirá do caso base onde
+nao temos troco = 0 e temos apenas moedas de 1 e irá calcular quantas
+formas de dar troco podemos. (No caso, 1 forma para todos os tipos de moeda
+ja que podemos nao dar nada em todos os casos).
+
+Em seguida, incrementa-se o troco e refaz os passos para cada uma das moedas.
+Neste exemplo, ao chegar no passo onde o troco é 2 e a moeda é 2, o algoritmo
+aproveita que para troco 2 e moeda 1 já temos uma possibilidade e incrementa
+o valor quando a moeda é 2.
+
+ Exemplo de tabela obtida:
+  i / j		1	2	3    
+    0           1       1       1
+    1           1	1	1
+    2           1       2       2  
+    3           1	2	3
+    4           1	3	4
+    5           1	3	5
+			
+			
+    Valores das moedas			
+    INDICES	0	1	2
+    S		1	2	4
+
+Metodos:
+*int coinChange(int S[], int n)
+- Parâmetros: S[], sendo o array com  valor das moedas disponíveis e n o troco
+- Retorno: numero de quantas formas pode-se dar o troco com as moedas disponíveis
+           em S[].
+
+
+-------> Empilhamento de Caixas
+Esta classe é responsável por calcular a altura maxima que um conjunto de caixas
+podem ser empilhadas, de modo que a caixa mais em baixo tenha largura e comprimento
+maiores do que a caixa de cima.
+
+Uma caixa pode ser rotacionada para ser colocada em cima de outra, ou seja, 
+consideramos a caixa C1(altura, comprimento, largura) como 
+c2(comprimento, altura, largura).
+O algoritmo consiste em dado um array com as todas as rotações das caixas, 
+para uma posicao i, calculamos a altura maxima dado que a caixa i está no topo.
+
+Dado que o vetor de rotações é ordenado por área da base, podemos verificar 
+um a um se a caixa[i+1] pode ser colocada sobre [i] e adicionamos o valor de 
+sua altura a altura maxima. No fim, retornamos o resultado com a maior altura.
+
+O detalhe da programação dinamica está quando calculamos a altura maxima com i
+no topo, se for possivel colocar j acima de i, aproveitamos o resultado previamente
+calculado.
+
+
+Estrutura de Dados:
+Classe Caixa(int a, int b, int c)
+*altura int
+*comprimento int
+*largura int
+
+Metodos:
+*int maxStackHeight( Caixa a[], int n)
+- Parâmetros: a[], sendo o array de caixas disponiveis e o tamanho do array
+- Retorno: altura maxima empilhando as caixas disponíveis.
+
+	
+
+-------> Arvore Geradora Minima (Prim)
+O algoritmo da arvore geradora minima de prim recebe um grafo como parametro
+e retorna um array que representa a arvore geradora minima deste grafo.
+Consiste em criar um array booleano para cada vertice, e dado que um vertice
+é visitado, elimina-o do array (boolean) e pega o próximo cuja aresta é a de
+menor peso.
+
+ Grafo exemplo
+
+	0 ---- 1
+	|      | 
+	|      |
+	2------3
+
+ PESOS: 0 - 1 = 5
+        0 - 2 = 7
+        2 - 3 = 1
+        1 - 3 = 4
+O algoritmo inicia no 0 e adiciona como visitado.Em seguida, escolhe o vertice
+de menor indice e que ainda nao foi visitado. Nesse caso, 1. No array de pais 
+(parent[]), o indice parent[1] vai receber o valor do 0 (cuja aresta tem o menor valor)
+e o nó 0 é mercado como visitado. Em seguida, pega-se procura-se pelo proximo indice
+disponivel no array, que é o 1 e procura pela ligação de menor peso, que é 1 -3. 
+1 é posicionado no array  parent[3] e 1 é visitado. O proximo indice é 2, e a 
+ligação de menor peso é com o 3. Logo, parent[3] é colocado 2 e o laço é encerrado.
+Como a raiz recebe menos -1 (pois ela nao possui um pai), o array retornado é dado 
+por: [-1, 0, 1, 2]
+
+Metodos:
+*int[] primMST(int graph[][])
+- Parametros: grafo 2D.
+- Retorno: array de inteiros com a representação de uma árvore geradora minima.
+
+-------> Compressão de Dados (Huffman)
+A compressão de dados de Huffman utiliza codigo binário utilizando menos bits
+para caracteres mais utilizados, economizando espaço.
+
+Funciona da seguinte maneira: inicialmente passa-se como parametro um array
+com as frequencias dos caracteres. O algoritmo adiciona essas frequencias como
+folhas (HuffmanLeaf). Em seguida, são pegas duas folhas, com as menores frequencias
+e cria-se um nó (HuffmanNode). A frequencia do nó é a soma das frequencias e as
+antigas folhas viram filhos deste nó. O algoritmo itera até não existir mais 
+referencia pra folhas. No fim, retornará uma árvore.
+ 
+Para imprimir os códigos, uma função percorre a arvore, e para cada nó
+percorrido a esquerda adiciona 0, e a direita 1. Os nós de maior frequencia,
+por serem  inseridos por ultimo, ficaram proximos a raiz da árvore e 
+consequentemente os códigos (caminho percorrido até a folha) será menor.
+
+Estrutura de Dados:
+Classe HuffmanTree(int frequencia)
+*frequencia int
+
+Metodos:
+*HuffmanTree buildTree(int[] charFreqs)
+- Parametros: array de frequencias de caracteres
+- Retorno: uma arvore com a estrutura dos codigos de huffman
+
+*void printCodes(HuffmanTree tree, StringBuffer prefix)
+- Parametros: a árvore gerada pelo método buildTree e uma variavel StringBuffer
+- Retorno: Nenhum. O resultado é impresso na tela.
+- OBS: para imprimir os códigos, percorre a árvore e a cada nó a esquerda adiciona 0
+       e a direita 1.
+
+

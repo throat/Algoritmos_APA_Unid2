@@ -15,6 +15,8 @@ Finalmente, o coeficiente binomial de n e p, com n e p distintos é
 dado pelo valor do resultado do coeficiente binomial de n-1 e p-1 somados ao
 coeficiente de n-1 e p. 
 
+Complexidade: O(n*p), sendo n e p o numerador e denomidador respectivamente.
+
 Metodos:
 * int binomialCoeff(int n, k) 
 - Parâmetros: n e k, inteiros referentes ao n e p do coeficiente binomial.
@@ -50,6 +52,8 @@ o valor quando a moeda é 2.
     INDICES	0	1	2
     S		1	2	4
 
+Complexidade: O(m*n), sendo m o valor do troco e n o número de moedas disponíveis.
+
 Metodos:
 *int coinChange(int S[], int n)
 - Parâmetros: S[], sendo o array com  valor das moedas disponíveis e n o troco
@@ -76,6 +80,7 @@ O detalhe da programação dinamica está quando calculamos a altura maxima com i
 no topo, se for possivel colocar j acima de i, aproveitamos o resultado previamente
 calculado.
 
+Complexidade: O(n²), sendo n o número de caixas.
 
 Estrutura de Dados:
 Classe Caixa(int a, int b, int c)
@@ -89,6 +94,7 @@ Metodos:
 - Retorno: altura maxima empilhando as caixas disponíveis.
 
 	
+***GULOSOS
 
 -------> Arvore Geradora Minima (Prim)
 O algoritmo da arvore geradora minima de prim recebe um grafo como parametro
@@ -118,6 +124,8 @@ ligação de menor peso é com o 3. Logo, parent[3] é colocado 2 e o laço é encerra
 Como a raiz recebe menos -1 (pois ela nao possui um pai), o array retornado é dado 
 por: [-1, 0, 1, 2]
 
+Complexidade: O(n²), sendo N o número de vértices do grafo.
+
 Metodos:
 *int[] primMST(int graph[][])
 - Parametros: grafo 2D.
@@ -138,6 +146,8 @@ Para imprimir os códigos, uma função percorre a arvore, e para cada nó
 percorrido a esquerda adiciona 0, e a direita 1. Os nós de maior frequencia,
 por serem  inseridos por ultimo, ficaram proximos a raiz da árvore e 
 consequentemente os códigos (caminho percorrido até a folha) será menor.
+
+Complexidade: O(nlogn) sendo n o número de caracteres distintos.
 
 Estrutura de Dados:
 Classe HuffmanTree(int frequencia)

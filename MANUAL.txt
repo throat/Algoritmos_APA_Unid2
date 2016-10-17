@@ -1,6 +1,12 @@
-*** DINAMICA
 
--------> Triangulo de Pascal
+
+
+**
+** PROGRAMAÇÃO DINAMICA
+**
+---------------------------------------------------------------------------------------
+TRIANGULO DE PASCAL
+
 A classe PascalTriangle implementa um algoritmo capaz de calcular o resultado
 de um coeficiente binomial. Um coeficiente binomial éa  relação entre dois números 
 naturais n e p, com n>=p, cujo resultado é n!/(p! (n-p)!).
@@ -22,7 +28,9 @@ Metodos:
 - Parâmetros: n e k, inteiros referentes ao n e p do coeficiente binomial.
 - Retorno: valor inteiro resultado do coeficiente binomial.
 
--------> Troco em Moedas
+---------------------------------------------------------------------------------------
+TROCO EM MOEDAS
+
 O objetivo desta classe é calcular de quantas formas distintas pode-se
 dar um troco N dado que dispoe-se de um número infinito de moedas em um 
 conjunto S = {moeda1, moeda2, ... , moedaM}.
@@ -61,7 +69,10 @@ Metodos:
            em S[].
 
 
--------> Empilhamento de Caixas
+---------------------------------------------------------------------------------------
+
+EMPILHAMENTO DE CAIXAS
+
 Esta classe é responsável por calcular a altura maxima que um conjunto de caixas
 podem ser empilhadas, de modo que a caixa mais em baixo tenha largura e comprimento
 maiores do que a caixa de cima.
@@ -93,10 +104,73 @@ Metodos:
 - Parâmetros: a[], sendo o array de caixas disponiveis e o tamanho do array
 - Retorno: altura maxima empilhando as caixas disponíveis.
 
-	
-***GULOSOS
+---------------------------------------------------------------------------------------
+CAMINHO MAIS CURTO
 
--------> Arvore Geradora Minima (Prim)
+A classe FloydWarshall possui o método execute que recebe como entrada um 
+grafo não direcionado, pois será representado por uma matriz de adjacência, 
+i. é, uma matriz cujas linhas e colunas representam vértices e a posição na 
+mesma representa a distância entre os mesmos. Cada iteração em K do algoritmo 
+garante a melhor distância entre um vértice e outro passando por K outros vértices. 
+No final de sua execução, temos uma matriz com os caminhos otimizados, na qual 
+podemos verificar a menor distância de um vértice a todos os demais.
+
+Sua complexidade é O(|V|³), em que V é o número de vértices do grafo.
+
+Métodos:
+
+execute (int[][] graph)
+parâmetro: graph matriz de adjacêncial
+Retorno: matriz com distância mais curta de cada vértice até cada outro vértice
+
+Exemplo de entrada e saída:
+
+         * entrada 
+         * | 0   2   4   8 | 
+         * | 2   0  MAX  2 | 
+         * | 4  MAX  0   5 | 
+         * | 8   2   5   0 |
+         *
+         * saída esperada
+         * | 0    2    4    4 |
+         * | 2    0    6    2 |
+         * | 4    6    0    5 |
+         * | 4    2    5    0 |
+--------------------------------------------------------------------------------------
+
+QUEBRA DE PALAVRAS
+
+A classe WordBreaker possui o método execute recebe uma string, um HashSet dicionário de 
+palavras e verifica se essa string pode ser encontrada como uma sequência de palavras 
+segmentadas no dicionário. Se a palavra existir, o método retorna true, c.c., false
+
+Sua complexidade é O(2^(n-2)) em que n é o número de palavras no dicionário
+
+Métodos:
+
+boolean execute (String str, HashMap dictionary)
+Parâmetros: str palavra a ser buscada, dictionary o conjunto de palavras dentre as quais
+str será buscada.
+Retorno: verdadeiro se a palavra existe no dicionário, falso caso contrário.
+
+Exemplo de entrada e saída:
+
+ 	* input => { Dicionário : {"João", "foi", "comprar", "pão"} Palavra :
+ 	* "foicomprar" }
+ 	*
+ 	* output => true
+
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+	
+**
+**GULOSOS
+**
+
+ARVORE GERADORA MINIMA (PRIM)
+
 O algoritmo da arvore geradora minima de prim recebe um grafo como parametro
 e retorna um array que representa a arvore geradora minima deste grafo.
 Consiste em criar um array booleano para cada vertice, e dado que um vertice
@@ -131,7 +205,11 @@ Metodos:
 - Parametros: grafo 2D.
 - Retorno: array de inteiros com a representação de uma árvore geradora minima.
 
--------> Compressão de Dados (Huffman)
+---------------------------------------------------------------------------------------
+
+
+COMPRESSÃO DE DADOS (HUFFMAN)
+
 A compressão de dados de Huffman utiliza codigo binário utilizando menos bits
 para caracteres mais utilizados, economizando espaço.
 
@@ -164,4 +242,92 @@ Metodos:
 - OBS: para imprimir os códigos, percorre a árvore e a cada nó a esquerda adiciona 0
        e a direita 1.
 
+---------------------------------------------------------------------------------------
+
+
+CAMINHO MAIS CURTO
+
+O algoritmo de Dijkstra recebe como parâmetro uma matriz representando um
+grafo e um inteiro que representa o vértice inicial. A cada iteração do
+algoritmo,é buscada a menor distância relativa ao vértice inicial dentre os e
+a armazena até que todos os possíveis vértices estejam armazenados.
+
+Sua complexidade é 
+
+Métodos: 
+
+int[] execute (int[][] graph, int ini)
+Parâmetros: graph grafo a ser utlizado, ini vértice origem
+retorno: matriz com distâncias de cada vértice até ini
+
+
+Exemplo de entrada e saída:
+	 
+	   0 ---- 1 
+	   | \    | 
+	   |    \ |  (representação visual)
+	   2 ---- 3
+	 
+Custo:
+	 
+	  0 - 1 = 2
+	  0 - 2 = 4
+	  0 - 3 = 8 (representação de pesos por aresta)
+	  2 - 3 = 5
+	  1 - 3 = 2
+	 
+Matriz de adjacência:
+	 
+	  | 0   2   4   8 | 
+	  | 2   0  MAX  2 | 
+	  | 4  MAX  0   5 | (representação em forma de matriz de adjacência)
+	  | 8   2   5   0 | 
+
+Resultado
+
+          [0 - 0 = 0] 
+          [0 - 1 = 2] 
+          [0 - 2 = 4] 
+          [0 - 3 = 4]
+
+--------------------------------------------------------------------------------
+
+ÁRVORE GERADORA MÍNIMA (KRUSKAL)
+
+A classe Kruskal possui o método execute que implementa o método MST de Kruskal.
+Kruskal calcula a menor árvore geradora para um determinado grafo. Para isso,
+é necessário utilizar uma estrutura de dados que garanta ordem baseada num
+determinado critério. No caso, utilizamos Maps com comparações baseadas no
+peso das arestas. O algoritmo ordena todos os vértices em ordem decrescente,
+checa se o menor deles forma um cíclo e, se o fizer, descarta o mesmo, então
+repete o processo até que todos os vértices tenham sido visitados.
+
+Sua complexidade é O(V log V²) em que V é o número de vértices
+
+Métodos: Edge [] execute (Edge[] edges, int[] vertices)
+Parâmetros: edges array do tipo Edge* que contém as arestas, e vertices array de inteiros
+que enumera os vértices.
+Retorno: array do tipo Edge com as arestas da menor árvore geradora. 
+
+*Edge: classe que implementa a interface comparable, necessária para a utlização e manutenção
+da ordenação da HashMap.
+Campos:
+int from
+int to
+int weight
+
+Exemplo de entrada e saída:
+
+         * 0 - 1 = 2 
+         * 0 - 2 = 4 
+         * 0 - 3 = 8 
+         * 2 - 3 = 5 
+         * 1 - 3 = 2 
+         
+Resultado:
+
+         * 0 - 1 
+         * 1 - 3 
+         * 2 - 3
+-----------------------------------------------------------------------------------------------------
 

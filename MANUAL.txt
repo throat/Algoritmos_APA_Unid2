@@ -240,6 +240,30 @@ No código:
 	O retorno é um inteiro que dirá o menor número de operações para transformar a String 1 na String 2
 	
 --------------------------------------------------------------------------------------
+	
+MULTIPLICAÇÃO DE MATRIZES
+
+A classe MultiplicacaoDeMatrizes possui o método execute que funciona abrindo a entrada
+(um array D de tamanho T que representa T - 1 matrizes de * modo que o tamanho das mesmas 
+são D[i-1]xD[i]) recursivamente de modo a testar todas as possibilidades de ordem de 
+multiplicação a fim de verificar o menor número de operações necessárias para se multiplicar
+essas matrizes.
+
+Complexidade: O(n log n) em que n é o número de matrizes a serem multiplicadas
+
+Métodos:
+int execute (dim[], i, j)
+Parâmetros: dim, array com dimensões de matrizes a serem multiplicadas, i e j ponto inicial
+e final, respectivamente, para multiplicação.
+Retorno: número de operações mínimo para multiplicar todas as matrizes.
+
+Exemplo de entrada:
+		dim = {40,20,30,10,30}, i = 1, j = tamanho de dim - 1
+Saída: 26000
+-----------------------------------------------------------------------------------------
+
+	
+--------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 	

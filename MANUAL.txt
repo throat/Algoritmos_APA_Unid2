@@ -47,13 +47,13 @@ aproveita que para troco 2 e moeda 1 já temos uma possibilidade e incrementa
 o valor quando a moeda é 2.
 
  Exemplo de tabela obtida:
-  i / j		1	2	3    
+  i / j			1		2		3    
     0           1       1       1
-    1           1	1	1
+    1           1		1		1
     2           1       2       2  
-    3           1	2	3
-    4           1	3	4
-    5           1	3	5
+    3           1		2		3
+    4           1		3		4
+    5           1		3		5
 			
 			
     Valores das moedas			
@@ -161,6 +161,84 @@ Exemplo de entrada e saída:
  	* output => true
 
 
+	
+--------------------------------------------------------------------------------------
+	
+MENOR SUBSEQUENCIA COMUM
+
+Dada duas sequências, encontrar a maior subsequencia presente em ambas as entradas,
+uma subsequencia é uma sequencia presente na mesma ordem relativa, mas não necessariamente
+de forma contigua ou seja, "abc", "abg", "bdf", "aeg", "acefg" são sequencias contíguas da
+palavra "abcdefg", então a sua complexidade é de 2^n para uma palavra de tamanho n.
+	
+Ex.: SHAZAM e ALAKAZAM, Maior subsequencia comum = AZAM
+	
+No código:
+	
+Assinatura: public static String lcs(String a, String b)
+	
+Pelo método ser estático, não é necessário criar o objeto MSC, apenas chama-lo pela sua classe
+então chama-se o metodo lcs, que tem duas Strings como entrada e retorna uma String de saida 
+com a maior subsequencia comum entre as entradas
+
+	String resultado = MSC.lcs(String a, String b);
+	
+	Essa função é case sensitive, logo difere maiusculas de minúsclas.
+	
+	Caso a String saída esteja vazia, então não existe um subsequência entre palavras
+--------------------------------------------------------------------------------------
+	
+SOMA DE SUBCONJUNTO
+
+Dado valores não negativos, essa função retorna se há elementos cuja soma de dois elementos
+dá igual ao parametro sum
+	
+	Ex.: Array de entrada {4,8,33,22,10,1,15}
+		 Soma esperada: 55
+		 Resultado: TRUE (55 = 33 + 22)
+	
+	Ex.: Array de entrada {4,8,33,22,10,1,15}
+		 Soma esperada: 13
+		 Resultado: FALSE (Não existe soma de dois elementos que tenha esse resultado)
+		 
+No código:
+	
+	Assinatura: static boolean isSubsetSum(int set[], int sum)
+	
+	Pelo método ser estático, não é necessário criar o objeto SubsetSum, apenas chama-lo pela sua classe
+	
+	Chama-se o método isSubsetSum que tem como entrada um array de ints (int[] set) 
+	e o valor soma desejado (int sum).
+	
+	boolean resultado = SubsetSum.isSubsetSum(array,soma);
+	
+	O resultado é um boolean, onde TRUE indica que há resutlado da soma e FALSE indica que não há resultados
+--------------------------------------------------------------------------------------
+	
+DISTANCIA DE EDIÇÃO
+
+Dada duas Strings, esse algoritmo mostra quantas operações são necessárias para se tornar a primeira
+String na segunda, essas operações são:
+	
+	Inserção, Modificação e deleção.
+	
+	Util em corretores ortográficos.
+	
+	Ex.: String pao e paes
+		 Resultado: 2 (Trocar a letra 'o' por 'e' e adicionar a letra s)
+	
+No código:
+	
+	Assinatura: static int editDistDP(String str1, String str2)
+	
+	Pelo método ser estático, não é necessário criar o objeto EditDistance , apenas chama-lo pela sua classe
+	
+	O método tem como entrada duas Strings(str1, str2), onde a primeira que sofrerá as modificações para se tornar a segunda
+	
+	int resultado = EditDistance.editDistDP(str1,str2)
+	
+	O retorno é um inteiro que dirá o menor número de operações para transformar a String 1 na String 2
+	
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
@@ -252,7 +330,7 @@ grafo e um inteiro que representa o vértice inicial. A cada iteração do
 algoritmo,é buscada a menor distância relativa ao vértice inicial dentre os e
 a armazena até que todos os possíveis vértices estejam armazenados.
 
-Sua complexidade é 
+Sua complexidade é O(V^3) em que V é o número de vértices do grafo.
 
 Métodos: 
 
@@ -331,3 +409,63 @@ Resultado:
          * 2 - 3
 -----------------------------------------------------------------------------------------------------
 
+MOCHILA FRACIONÁRIA
+	
+O algoritmo tem a seguinte estrutura: Dado uma serie de itens, o peso individual, valor individual e peso da 
+mochila, qual é o maior valor obtido sem passar do peso suportado pela mochila. Nesse algoritmo objetos podem ser
+partidos em pedaços menores.
+	
+O algoritmo ira retornar um valor double (devido as quebras dos objetos) que indicará o maior lucro possivel na mochila.
+	
+Então o resultado do algoritmo pode ser:
+	
+	Ex.: Itens completos A, itens completos B, e 5/6 do objeto C;
+	
+Em código:
+	
+	Cria-se um objeto do tipo MochilaFrac
+	
+	MochilaFrac MF = new MochilaFrac();
+	
+	Determina-se 2 arrays: Um com os pesos dos itens e outro com os valores, ou seja, no indice i de cada array indicará
+	o peso e o valor do objeto i ( )
+	
+	Tambem tem que se indicar o peso da mochila.
+	
+	Assinatura: double fill(int nItens, double weight[], double benefit[], double W);
+	
+	Esse é o método que irá realizar o calculo do lucro máximo, ele recebe como parametro os arrays de pesos (weight[]) e valores(benefit[]) alem do
+	numero de itens(nItens) e o peso da mochila (W)
+	
+	chamamos a função da seguinte forma:
+	
+	double resultado = MF.fill(numero_itens, peso[], valor[], peso_mochila)
+
+-----------------------------------------------------------------------------------------------------
+COLORAÇÃO DE GRAFOS
+
+O algoritmo de coloração de grafos tem como objetivo colorir com o menor numero de cores possíveis, o grafo desejado, mas nós adjacentes
+não podem ser coloridos da mesma cor. Esse algoritmo retorna um array de inteiros com a cor que devem ser pintados, como são itens o usuario
+entenderá que o resultado será por exemplo, a cor zero no nó 0 , cor 2 no nó 1 etc.
+	
+Em código:
+	
+	Assinaturas:  CorGrafo(int v) <-- Construtor Padrão / void addNo(int v,int w) / int[] greedyColoring() 
+	
+	O usuário deverá criar um objeto do tipo CorGrafo, e dizendo no parenteses a quantidade de nós que existem no grafo
+	
+	CorGrafo CG = new CorGrafo(5) --> Grafo com cinco nós
+	
+	logo após o usuário deve alocar os nós usando o método addNo, que dirá qual é o nó e seu vizinho
+	
+	CG.addNo(0,1)
+	
+	Só se pode adicionar um vizinho por vez, então caso um nó tenha varios vizinhos, deve-se adicionar o mesmo nó com vizinho diferente
+	
+	CG.addNo(0,1)
+	CG.addNo(0,2)
+	
+	após definir os nós basta chamar o método greedyColoring que irá retornar o array de inteiros com as cores desejadas
+	
+	CG.greedyColoring();
+	

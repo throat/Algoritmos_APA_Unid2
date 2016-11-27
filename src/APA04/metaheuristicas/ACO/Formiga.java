@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  *
- * @author Robertson
+ * @author Robertson Lima -11403755
  */
 public class Formiga {
 
@@ -35,7 +35,7 @@ public class Formiga {
         Random random = new Random();
         //obtem um numero aleatorio
         double aletorio = random.nextDouble();
-        double melhorOpcao = 0.3;
+        double melhorOpcao = 0.5;
         //se o numero obtido for menor que 0.8, baseia o escolhido na trilha de feromonio
         //escolhendo o de feromonio de maior intensidade
         if (aletorio < melhorOpcao) {
@@ -198,17 +198,19 @@ public class Formiga {
 
         List<Integer> local = listaTarefas;
 
-        int indexI = 0;
+        //int indexI = 0;
+		int indexI = (solucao.length -1);
         boolean lessMakespan = true;
         //enquanto puder trocar indicies e nao tiver melhorado o makespan
-        while (indexI < (solucao.length) && lessMakespan) {
+        while (indexI > 0 && lessMakespan) {
             int tarefaI = local.get(indexI);
 
             local.remove(indexI);
 
-            int indexJ = 0;
+            //int indexJ = 0;
+			int indexJ = solucao.length -1;
             //insere tarefaI em todas as posições e calcula makespan
-            while (indexJ < solucao.length && lessMakespan) {
+            while (indexJ > 0 && lessMakespan) {
                 local.add(indexJ, tarefaI);
 
                 int[] solucaoTemp = new int[solucao.length];
@@ -230,13 +232,13 @@ public class Formiga {
                 } else {
                     local.remove(indexJ);
                 }
-                indexJ++;
+                indexJ--;
             }
             //se nao houve melhora, reinsere tarefa na posicao antiga
             if (lessMakespan) {
                 local.add(indexI, tarefaI);
             }
-            indexI++;
+            indexI--;
         }
 
         int k = 0;

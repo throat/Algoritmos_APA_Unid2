@@ -1,6 +1,9 @@
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ArtificialBeeColony {
 
@@ -21,14 +24,15 @@ public class ArtificialBeeColony {
     public ArrayList<FoodSource> solutions;
     public FoodSource bestHoney;
     public int iteraitonsCounter;
+    public FoodSource bestOfAll = null;
     private double[][] problemInstance;
 
-    
     public ArtificialBeeColony(int n, double[][] problemInstance) {
+
         MAX_LENGTH = problemInstance[0].length;
-        NP = 2000;					
+        NP = 40;
         FOOD_NUMBER = NP / 2;
-        LIMIT = 50;
+        LIMIT = 30;
         MAX_CYCLES_NUMBER = 1000;
         bestHoney = null;
         iteraitonsCounter = 0;
@@ -47,9 +51,7 @@ public class ArtificialBeeColony {
 
         while (!done) {
             if (iteraitonsCounter < MAX_CYCLES_NUMBER) {
-                if (bestHoney.getMakespam() == 0) {
-                    done = true;
-                }
+
                 employedBeesPhase();
                 getFitness();
                 calculateProbabilities();
@@ -58,8 +60,6 @@ public class ArtificialBeeColony {
                 scoutBeePhase();
 
                 iteraitonsCounter++;
-                // This is here simply to show the runtime status.
-                //System.out.println("Epoch: " + iteraitonsCounter);
             } else {
                 done = true;
             }
@@ -72,7 +72,7 @@ public class ArtificialBeeColony {
             //printSolution(h);
 
         }
-        
+
         return done;
     }
 
@@ -91,8 +91,8 @@ public class ArtificialBeeColony {
             sendToWork(currentBee, neighborBee);
         }
     }
-
-    public void onlookerBeesPhase() {
+ 
+   public void onlookerBeesPhase() {
         int i = 0;
         int t = 0;
         int neighborBeeIndex = 0;
@@ -166,6 +166,7 @@ public class ArtificialBeeColony {
         for (int i = 0; i < FOOD_NUMBER; i++) {
             currentBee = foodSources.get(i);
             if (currentBee.getTrials() >= LIMIT) {
+                //System.out.println("Solution with makepsam " + currentBee.getMakespam() + " was discarded");
                 for (int j = 0; j < shuffles; j++) {
                     randomlyArrange(i);
                 }
@@ -187,7 +188,7 @@ public class ArtificialBeeColony {
 
         for (int i = 0; i < FOOD_NUMBER; i++) {
             thisFood = foodSources.get(i);
-            thisFood.setFitness((worstMakespam/thisFood.getMakespam()));
+            thisFood.setFitness((worstMakespam / thisFood.getMakespam()));
         }
     }
 
@@ -219,8 +220,9 @@ public class ArtificialBeeColony {
             newFoodIndex = foodSources.indexOf(newHoney);
 
             int[] arr = generatesRandomSolutions(MAX_LENGTH);
-            for(int j = 0; j < MAX_LENGTH; j++)
+            for (int j = 0; j < MAX_LENGTH; j++) {
                 foodSources.get(i).setNectar(j, arr[j]);
+            }
 
             foodSources.get(newFoodIndex).computeMakespam(problemInstance);
         } // i
@@ -258,7 +260,20 @@ public class ArtificialBeeColony {
     }
 
     public void memorizeBestFoodSource() {
+        if (bestHoney != null && bestHoney.getMakespam() < Collections.min(foodSources).getMakespam()) {
+        }
         bestHoney = Collections.min(foodSources);
+        if (bestOfAll == null) {
+            bestOfAll = bestHoney;
+        } else if (bestOfAll.getMakespam() > bestHoney.getMakespam()) {
+            try {
+                bestOfAll = bestHoney.clone();
+                //System.out.println(bestOfAll.getMakespam());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(ArtificialBeeColony.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     public void printSolution(FoodSource solution) {

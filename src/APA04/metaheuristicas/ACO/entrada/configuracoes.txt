@@ -1,6 +1,6 @@
 n_formigas 5
-evaporacao 0.5
+evaporacao 0.3
 maxFero 1
 minFero 0.2
 tempoTeste 1
-lambda 10
+lambda 1

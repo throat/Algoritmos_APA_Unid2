@@ -1,14 +1,16 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /* TesterABC.java
  *
  */
-
 public class TesterABC {
+
     ArtificialBeeColony abc;
     int MAX_TIME;
     int MAX_LENGTH;
@@ -18,31 +20,46 @@ public class TesterABC {
     private double inicialSeed;
     private double upperBound;
     private double lowerBound;
-    private double[][] procTime;
-    
-    // test
-    private double [][] pt1;
-    private double [][] pt2;
-    private double [][] pt3;
-    private double [][] pt4;
-    private double [][] pt5;
+    private ArrayList<double[][]> procTimes = new ArrayList<>();
 
     public TesterABC() throws IOException {
-        pt1 = loadProblem("teste1.txt");
-        pt2 = loadProblem("teste2.txt");
-        pt3 = loadProblem("teste3.txt");
-        pt4 = loadProblem("teste4.txt");
-        pt5 = loadProblem("teste5.txt");
+        for (int i = 0; i < 10; i++) {
+            procTimes.add(loadProblem("teste" + (i + 1) + ".txt"));
+        }
         // SOMENTE PARA MOSTRAR IMPLEMENTAÇÃO, TEMPO = 10 S P/ CADA ARQUIVO
-        MAX_TIME = 10000;           // time to run each instance of problem
+        MAX_TIME = 60000;           // time to run each instance of problem
         runtimes = new long[MAX_TIME];
     }
-    
+	
+	public double getRPD(double melhorMakespan, int i){
+		double upper = 0;
+		switch(i){
+			case 0:	
+				upper = 1278;
+				break;
+			case 1:
+				upper = 1582;
+				break;
+			case 2:
+				upper = 2297;
+				break;
+			case 3:
+				upper = 2724;
+				break;
+			case 4:
+				upper = 26189;
+				break;
+				
+			
+		}
+		return (melhorMakespan - upper) / upper;
+	}
+
     public double[][] loadProblem(String dir) throws IOException {
         File arquivo = new File(dir);
         double[][] newInstance = null;
         try {
-            
+
             FileReader fr = new FileReader(arquivo); //faz a leitura do arquivo
             String linha;
             BufferedReader br = new BufferedReader(fr);
@@ -71,7 +88,7 @@ public class TesterABC {
                         linha = br.readLine();
 
                     }
-                  
+
                 }
             }
             br.close();
@@ -83,47 +100,42 @@ public class TesterABC {
 
     public void test(int maxLength, int trialLimit, int maxEpoch) {
         MAX_LENGTH = maxLength;
-        for(int k = 0; k < 5; k++){
-            if(k == 0)
-                abc = new ArtificialBeeColony(MAX_LENGTH, pt1);                                      //instantiate and define abc here
-            if(k == 1)
-                    abc = new ArtificialBeeColony(MAX_LENGTH, pt2);
-            if(k == 2)
-                    abc = new ArtificialBeeColony(MAX_LENGTH, pt3);
-            if(k == 3)
-                    abc = new ArtificialBeeColony(MAX_LENGTH, pt4);
-            if(k == 4)
-                    abc = new ArtificialBeeColony(MAX_LENGTH, pt5);
-        abc.setLimit(trialLimit);
-        abc.setMaxEpoch(maxEpoch);
-        long testStart = System.currentTimeMillis();
-        String filepath = "ABC-N"+MAX_LENGTH+"-"+trialLimit+"-"+maxEpoch+".txt";
-        long startTime = 0;
-        long endTime = 0;
-        long totalTime = 0;
-        int fail = 0;
-        int success = 0;
-        
-        System.out.println("Starting algorithm, best result found will be displayed in 10 seconds");
-        while(totalTime < MAX_TIME ) {                                            
-            startTime = System.currentTimeMillis();
-            abc.algorithm();
-            endTime = System.currentTimeMillis();
-            totalTime += endTime - startTime;
+
+        //System.out.println("Starting algorithm, best result found will be displayed in 60 seconds");
+        int counter = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.println("Teste " + (j+1) + " com arquivo de teste " + (i+1));
+                abc = new ArtificialBeeColony(MAX_LENGTH, procTimes.get(i));
+                abc.setLimit(trialLimit);
+                abc.setMaxEpoch(maxEpoch);
+                long testStart = System.currentTimeMillis();
+                long startTime = 0;
+                long endTime = 0;
+                long totalTime = 0;
+                while (totalTime < MAX_TIME) {
+                    startTime = System.currentTimeMillis();
+                    abc.algorithm();
+                    endTime = System.currentTimeMillis();
+                    totalTime += endTime - startTime;
+					System.out.println(getRPD(abc.bestOfAll.getMakespam(), i) + " "+abc.bestOfAll.getMakespam() + " " + totalTime);
+
+                }
+            }
         }
-        System.out.println("The best makespam was: " + abc.bestHoney.getMakespam());
-        System.out.println("With the sequence: ");
-        System.out.print("[ ");
-        for(int i = 0; i < abc.MAX_LENGTH; i++)
-            System.out.print((abc.bestHoney.getNectar(i)+1) + " ");
-        System.out.print("]");
-        }
+       // System.out.println(abc.bestOfAll.getMakespam());
+        //System.out.println("With the sequence: ");
+//        System.out.print("[ ");
+//        for(int i = 0; i < abc.MAX_LENGTH; i++)
+//            System.out.print((abc.bestOfAll.getNectar(i)+1) + " ");
+//        System.out.print("]");
+
     }
 
     public static void main(String args[]) throws IOException {
         TesterABC tester = new TesterABC();
 
         tester.test(4, 50, 1000);
-        
+
     }
 }

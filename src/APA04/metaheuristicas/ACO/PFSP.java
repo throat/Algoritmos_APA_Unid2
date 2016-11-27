@@ -64,6 +64,10 @@ public class PFSP {
         trilha = new double[tarefas][tarefas];
 
     }
+	
+	public double getRPD(){
+		return (melhorMakespan - limiteSuperior)/limiteSuperior;
+	}
     
     public void carregarFlowshop(String dir){
         File arquivo = new File(dir);
@@ -83,7 +87,7 @@ public class PFSP {
                     Double.parseDouble(st.nextElement().toString());
                     this.limiteSuperior = Double.parseDouble(st.nextElement().toString());
                     this.limiteInferior = Double.parseDouble(st.nextElement().toString());
-                    System.out.println("Indices inseridos.");
+                  //  System.out.println("Indices inseridos.");
 
                 } else if (linha.startsWith("processing")) {
                     double[][] novo = new double[maquinas][tarefas];
@@ -210,16 +214,16 @@ public class PFSP {
   
 
     public int[] resolver() {
-        System.out.println("Espalhando feromônio por todo o grafo:");
+        //System.out.println("Espalhando feromônio por todo o grafo:");
         double feroInicial = maxFero;
         for (int i = 0; i < tarefas; i++) {
             for (int j = 0; j < tarefas; j++) {
                 trilha[i][j] = feroInicial;
             }
         }
-        System.out.println("Iniciando iterações!");
+        //System.out.println("Iniciando iterações!");
         double tempo = 60000*tempoTeste;
-        System.out.println("O tempo de execução do laço será: "+(tempoTeste/60000)+" minuto(s).");
+        //System.out.println("O tempo de execução do laço será: "+(tempoTeste/60000)+" minuto(s).");
         double tempoAtual = 0;
         double tempoInicial, tempoFinal;
         while (tempo > tempoAtual) { 
@@ -230,10 +234,10 @@ public class PFSP {
             atualizarSolucao();
             tempoFinal=System.currentTimeMillis();
             tempoAtual += (tempoFinal - tempoInicial);
-            System.out.println("Melhor makespan obtido: " +melhorMakespan);
+            System.out.println(getRPD()+ " "+ melhorMakespan+" " +tempoAtual);
         }
         System.out.println("A execução terminou!");
-         System.out.println("Tempo calculando soluções: "+ tempoAtual/60000+" min.");
+        System.out.println("Tempo calculando soluções: "+ tempoAtual/60000+" min.");
         System.out.println("Melhor tempo total para realizar tarefas: " + melhorMakespan);
         System.out.println("Limite superior(upper bound): "+ limiteSuperior);
         System.out.println("Limite inferior(lower bound): "+ limiteInferior);
@@ -319,8 +323,8 @@ public class PFSP {
         String config = diretorio + "\\entrada\\configuracoes.txt";
         String problema = diretorio + "\\entrada\\" + args[0];
 
-        System.out.println("Colonia de Formigas para Redução de tempo em agendamento de tarefas:");
-        System.out.println("=============================");
+        //System.out.println("Colonia de Formigas para Redução de tempo em agendamento de tarefas:");
+        //System.out.println("=============================");
 
         PFSP p = new PFSP(problema, config);
 

@@ -1,10 +1,6 @@
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +33,7 @@ public class GRASP {
 	
 	public Map<Integer, Integer> search(){
 		int best = 999999999 ;
-		System.out.println("O tempo de execução do laço será: "+(time/60000)+" minuto(s).");
+		System.out.println("O tempo de execu  o do la o ser : "+(time/60000)+" minuto(s).");
         double tempoAtual =0;
         double tempoInicial, tempoFinal;
 		Map<Integer,Integer> candidate = new LinkedHashMap<Integer,Integer>();
@@ -52,10 +48,10 @@ public class GRASP {
 			}
 			tempoFinal=System.currentTimeMillis();
 			tempoAtual += (tempoFinal - tempoInicial);
-			//System.out.println("cost: " + cost);
+			System.out.println(best+ " "+ tempoAtual);
 		}
 		System.out.println("cost final: " + best);
-		System.out.println("A execução terminou!");
+		System.out.println("A execu  o terminou!");
         System.out.println("Melhor tempo total para realizar tarefas: " + best);
 		
 		return candidate;
